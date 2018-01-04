@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script> 
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{%static "ajax_app/css/style.css"%}">
+    <script src='{%static "ajax_app/js/lead.js"%}'></script>
+</head>
+
+<body>
+    <div class="container">    
+        <form>
+            <div class="row search">
+                {%csrf_token%}
+                <div class="col-md-4"> <span> Name:</span>
+                    <input type="text" name="name" autocomplete="off"> </div>
+                <div class="col-md-3"> <span> From:</span>
+                    <input type="date" name="from" id="from">
+                </div>
+                <div class="col-md-3"> <span> Date:</span>
+                    <input type="date" name="to" id="to">
+                </div>
+                <div class="col-md-1">
+                    <button id="reset" type="reset" onclick="document.location.reload()">Reset</button>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-4 count">
+                    per page <input type="number" name="count" id="count">
+                </div>
+            </div> -->
+        </form>
+       
+        <div class="pagination">  
+            <div id='page'>  
+                {%for i in range%}
+                <a href="">{{forloop.counter}}</a>
+                {%endfor%}        
+            </div>            
+        </div>   
+           
+        <div class="content">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="w-10">leads_id</th>
+                        <th class="w-20">first name</th>
+                        <th class="w-20">last name</th>
+                        <th class="w-25">registered datetime</th>
+                        <th class="w-25">email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if leads %} {%for lead in leads %}
+                    <tr class="new_lead">
+                        <td class="w-10">{{lead.id}}</td>
+                        <td class="w-20">{{lead.first_name}}</td>
+                        <td class="w-20">{{lead.last_name}}</td>
+                        <td class="w-25">{{lead.created_at | date:'Y-m-d'}}</td>
+                        <td class="w-25">{{lead.email_id}}</td>
+                    </tr>
+                    {%endfor%}{%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
